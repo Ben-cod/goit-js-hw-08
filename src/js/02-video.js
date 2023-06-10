@@ -1,33 +1,39 @@
-import Player from '@vimeo/player';
+// import Player from '@vimeo/player';
+// import throttle from 'lodash';
+
+
+// const iframe = document.querySelector('iframe');
+// const iframePlayer = new Vimeo.Player(iframe);
+
+// const jqueryPlayer = new Vimeo.Player($('iframe'));
+// const idPlayer = new Vimeo.Player('player1');
+import Vimeo from '@vimeo/player';
 import throttle from 'lodash.throttle';
-
-
+const STORAGE_KEY = 'videoplayer-current-time';
 const iframe = document.querySelector('iframe');
-const player = new Player(iframe);
-
-const onPlay = function (data) {
-    localStorage.setItem('videoplayer-current-time', data.seconds);
-};
-
+const player = new Vimeo(iframe);
 player.on('timeupdate', throttle(onPlay, 1000));
-
-const currentTime = Number(localStorage.getItem('videoplayer-current-time'));
-
-player.setCurrentTime(currentTime).then(function (seconds) {
-    // seconds = the actual time that the player seeked to
-}).catch(function (error) {
+function onPlay(data) {
+  const currentTime = JSON.stringify(data);
+  localStorage.setItem(STORAGE_KEY, currentTime);
+}
+function insertTime() {
+  const value = localStorage.getItem(STORAGE_KEY);
+  if (value) {
+    const timeValueJSON = JSON.parse(value);
+    const { seconds } = timeValueJSON;
+    return seconds;
+  }
+}
+player
+  .setCurrentTime(insertTime())
+  .then(function (seconds) {
+  })
+  .catch(function (error) {
     switch (error.name) {
-        case 'RangeError':
-            // the time was less than 0 or greater than the video’s duration
-            break;
-        default:
-            // some other error occurred
-            break;
+      case 'RangeError':
+        break;
+      default:
+        break;
     }
-});
-
-player.setColor('#45a247').then(function (color) {
-    // the color that was set
-}).catch(function (error) {
-    // an error occurred setting the color
-});
+  });
