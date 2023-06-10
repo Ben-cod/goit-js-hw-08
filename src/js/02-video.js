@@ -3,7 +3,7 @@ import Player from '@vimeo/player';
 import { throttle } from 'lodash.throttle';
 
 const iframeRef = document.querySelector('#vimeo-player')
-const player = new Player(iframe);
+const player = new Player(iframeRef);
 
 // Функція для збереження поточного часу відтворення у локальне сховище
 const saveCurrentTime = throttle(async () => {
