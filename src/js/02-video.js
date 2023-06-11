@@ -1,12 +1,4 @@
-// import Player from '@vimeo/player';
-// import throttle from 'lodash';
 
-
-// const iframe = document.querySelector('iframe');
-// const iframePlayer = new Vimeo.Player(iframe);
-
-// const jqueryPlayer = new Vimeo.Player($('iframe'));
-// const idPlayer = new Vimeo.Player('player1');
 import Vimeo from '@vimeo/player';
 import throttle from 'lodash.throttle';
 const STORAGE_KEY = 'videoplayer-current-time';
@@ -20,8 +12,8 @@ function onPlay(data) {
 function insertTime() {
   const value = localStorage.getItem(STORAGE_KEY);
   if (value) {
-    const timeValueJSON = JSON.parse(value);
-    const { seconds } = timeValueJSON;
+    const timeValue = JSON.parse(value);
+    const { seconds } = timeValue;
     return seconds;
   }
 }
