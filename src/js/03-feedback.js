@@ -23,8 +23,8 @@ function handleFormInput() {
     const storedData = localStorage.getItem(STORAGE_KEY);
     if (storedData) {
       const formData = JSON.parse(storedData);
-      emailInput.value = formData.email || '';
-      messageInput.value = formData.message || '';
+      emailInput.value = formData.email;
+      messageInput.value = formData.message;
     }
   }
   
